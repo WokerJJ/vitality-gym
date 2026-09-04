@@ -1,0 +1,582 @@
+/**
+ * TEMA PERSONALIZADO - GIMNASIO VITALITY
+ * Paleta de colores energética y moderna
+ * Autores: Daniela Blandón, Jhon Hucker Chalarca
+ */
+
+/* ========================================
+   VARIABLES DE COLORES
+   ======================================== */
+:root {
+    /* Colores principales - Energía y Vitalidad */
+    --vitality-primary: #00C853;
+    --vitality-primary-dark: #00A344;
+    --vitality-primary-light: #69F0AE;
+    --vitality-secondary: #FF6D00;
+    --vitality-secondary-dark: #E65100;
+
+    /* Colores de fondo */
+    --vitality-bg-dark: #1A1A2E;
+    --vitality-bg-card: #16213E;
+    --vitality-bg-light: #0F3460;
+
+    /* Texto */
+    --vitality-text-white: #FFFFFF;
+    --vitality-text-light: #E8E8E8;
+    --vitality-text-muted: #A0A0A0;
+
+    /* Estados */
+    --vitality-success: #00C853;
+    --vitality-warning: #FFD600;
+    --vitality-danger: #FF1744;
+    --vitality-info: #00B0FF;
+
+    /* Gradiente */
+    --vitality-gradient: linear-gradient(135deg, #00C853 0%, #00B0FF 100%);
+    --vitality-gradient-card: linear-gradient(145deg, #16213E 0%, #1A1A2E 100%);
+}
+
+/* ========================================
+   ESTILOS GENERALES
+   ======================================== */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--vitality-bg-dark);
+    color: var(--vitality-text-white);
+    min-height: 100vh;
+}
+
+.text-muted {
+    color: var(--vitality-text-muted) !important;
+}
+
+/* ========================================
+   NAVEGACIÓN
+   ======================================== */
+.navbar-vitality {
+    background: linear-gradient(90deg, var(--vitality-bg-dark) 0%, var(--vitality-bg-card) 100%);
+    border-bottom: 3px solid var(--vitality-primary);
+    box-shadow: 0 4px 15px rgba(0, 200, 83, 0.3);
+    padding: 0.8rem 1rem;
+}
+
+.navbar-brand-vitality {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--vitality-text-white) !important;
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
+
+.navbar-brand-vitality .logo-icon {
+    width: 45px;
+    height: 45px;
+    background: var(--vitality-gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(0, 200, 83, 0.5);
+}
+
+.navbar-brand-vitality .logo-icon i {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.nav-link-vitality {
+    color: var(--vitality-text-light) !important;
+    font-weight: 500;
+    padding: 0.5rem 1rem !important;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    margin: 0 0.2rem;
+}
+
+.nav-link-vitality:hover,
+.nav-link-vitality.active {
+    color: var(--vitality-primary) !important;
+    background-color: rgba(0, 200, 83, 0.1);
+}
+
+.nav-link-vitality i {
+    margin-right: 8px;
+    font-size: 1.1rem;
+}
+
+/* ========================================
+   TARJETAS (CARDS)
+   ======================================== */
+.card-vitality {
+    background: var(--vitality-gradient-card);
+    border: 1px solid rgba(0, 200, 83, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    color: var(--vitality-text-white);
+}
+
+.card-vitality .text-muted {
+    color: var(--vitality-text-light) !important;
+}
+
+.card-vitality:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 200, 83, 0.2);
+    border-color: var(--vitality-primary);
+}
+
+.card-header-vitality {
+    background: rgba(0, 200, 83, 0.1);
+    border-bottom: 2px solid var(--vitality-primary);
+    padding: 1rem 1.5rem;
+    font-weight: 600;
+    color: var(--vitality-text-white);
+}
+
+.card-header-vitality i {
+    color: var(--vitality-primary);
+    margin-right: 10px;
+}
+
+.card-body {
+    color: var(--vitality-text-light);
+}
+
+/* ========================================
+   ESTADÍSTICAS
+   ======================================== */
+.stat-card {
+    background: var(--vitality-gradient-card);
+    border-radius: 16px;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(0, 200, 83, 0.2);
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--vitality-gradient);
+}
+
+.stat-card.primary::before { background: var(--vitality-primary); }
+.stat-card.success::before { background: var(--vitality-success); }
+.stat-card.warning::before { background: var(--vitality-warning); }
+.stat-card.danger::before { background: var(--vitality-danger); }
+.stat-card.info::before { background: var(--vitality-info); }
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    background: rgba(0, 200, 83, 0.1);
+    color: var(--vitality-primary);
+}
+
+.stat-card.success .stat-icon { background: rgba(0, 200, 83, 0.1); color: var(--vitality-success); }
+.stat-card.warning .stat-icon { background: rgba(255, 214, 0, 0.1); color: var(--vitality-warning); }
+.stat-card.danger .stat-icon { background: rgba(255, 23, 68, 0.1); color: var(--vitality-danger); }
+.stat-card.info .stat-icon { background: rgba(0, 176, 255, 0.1); color: var(--vitality-info); }
+
+.stat-value {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--vitality-text-white);
+    margin-bottom: 0.3rem;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--vitality-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ========================================
+   BOTONES
+   ======================================== */
+.btn-vitality {
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 0.6rem 1.5rem;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.85rem;
+    border: none;
+}
+
+.btn-vitality-primary {
+    background: var(--vitality-gradient);
+    color: white;
+}
+
+.btn-vitality-primary:hover {
+    background: linear-gradient(135deg, #00A344 0%, #0091CC 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 200, 83, 0.4);
+    color: white;
+}
+
+.btn-vitality-secondary {
+    background: var(--vitality-secondary);
+    color: white;
+}
+
+.btn-vitality-secondary:hover {
+    background: var(--vitality-secondary-dark);
+    color: white;
+}
+
+.btn-vitality-outline {
+    background: transparent;
+    border: 2px solid var(--vitality-primary);
+    color: var(--vitality-primary);
+}
+
+.btn-vitality-outline:hover {
+    background: var(--vitality-primary);
+    color: white;
+}
+
+/* ========================================
+   TABLAS
+   ======================================== */
+.table-vitality {
+    color: var(--vitality-text-light);
+    margin-bottom: 0;
+}
+
+.table-vitality thead th {
+    background: rgba(0, 200, 83, 0.1);
+    color: var(--vitality-primary);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    border-bottom: 2px solid var(--vitality-primary);
+    padding: 1rem;
+}
+
+.table-vitality tbody td {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    vertical-align: middle;
+}
+
+.table-vitality tbody tr:hover {
+    background: rgba(0, 200, 83, 0.05);
+}
+
+/* ========================================
+   FORMULARIOS
+   ======================================== */
+.dropdown-item.active,
+.dropdown-item:active,
+.select2-results__option--highlighted {
+    background-color: #0d6efd !important; /* Azul Bootstrap */
+    color: white !important;
+}
+
+.dropdown-item:hover {
+    background-color: #e9ecef;
+    color: #212529;
+}
+
+.form-control-vitality,
+.form-control-vitality option {
+    background-color: var(--vitality-bg-light);
+    border: 2px solid rgba(0, 200, 83, 0.2);
+    border-radius: 10px;
+    color: var(--vitality-text-white);
+    padding: 0.75rem 1rem;
+}
+
+.form-control-vitality:focus {
+    background-color: var(--vitality-bg-card);
+    border-color: var(--vitality-primary);
+    box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.2);
+    color: var(--vitality-text-white);
+}
+
+.form-control-vitality::placeholder {
+    color: var(--vitality-text-muted);
+}
+
+.form-label-vitality {
+    color: var(--vitality-text-light);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+/* Estilos especificos para selects */
+select.form-control-vitality {
+    appearance: auto;
+    cursor: pointer;
+}
+
+select.form-control-vitality option {
+    background-color: var(--vitality-bg-card);
+    color: var(--vitality-text-white);
+    padding: 0.5rem;
+}
+
+select.form-control-vitality option:hover,
+select.form-control-vitality option:focus,
+select.form-control-vitality option:checked {
+    background-color: var(--vitality-primary);
+    color: white;
+}
+
+/* Para form-select de Bootstrap */
+.form-select-vitality {
+    background-color: var(--vitality-bg-light);
+    border: 2px solid rgba(0, 200, 83, 0.2);
+    border-radius: 10px;
+    color: var(--vitality-text-white);
+    padding: 0.75rem 1rem;
+}
+
+.form-select-vitality:focus {
+    background-color: var(--vitality-bg-card);
+    border-color: var(--vitality-primary);
+    box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.2);
+    color: var(--vitality-text-white);
+}
+
+/* ========================================
+   BADGES
+   ======================================== */
+.badge-vitality {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+.badge-activo {
+    background: rgba(0, 200, 83, 0.2);
+    color: var(--vitality-success);
+    border: 1px solid var(--vitality-success);
+}
+
+.badge-vencido {
+    background: rgba(255, 23, 68, 0.2);
+    color: var(--vitality-danger);
+    border: 1px solid var(--vitality-danger);
+}
+
+.badge-por-vencer {
+    background: rgba(255, 214, 0, 0.2);
+    color: var(--vitality-warning);
+    border: 1px solid var(--vitality-warning);
+}
+
+.badge-inactivo {
+    background: rgba(160, 160, 160, 0.2);
+    color: var(--vitality-text-muted);
+    border: 1px solid var(--vitality-text-muted);
+}
+
+/* ========================================
+   ACCESO - PANTALLA DE VALIDACIÓN
+   ======================================== */
+.acceso-container {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.acceso-card {
+    background: var(--vitality-gradient-card);
+    border-radius: 24px;
+    padding: 3rem;
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+    border: 1px solid rgba(0, 200, 83, 0.2);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.acceso-status {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 0 auto 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    animation: pulse 2s infinite;
+}
+
+.acceso-status.permitido {
+    background: rgba(0, 200, 83, 0.2);
+    color: var(--vitality-success);
+    border: 4px solid var(--vitality-success);
+}
+
+.acceso-status.denegado {
+    background: rgba(255, 23, 68, 0.2);
+    color: var(--vitality-danger);
+    border: 4px solid var(--vitality-danger);
+    animation: shake 0.5s;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 200, 83, 0.4); }
+    50% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(0, 200, 83, 0); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+/* ========================================
+   MODALES
+   ======================================== */
+.modal-content-vitality {
+    background: var(--vitality-bg-card);
+    border: 1px solid rgba(0, 200, 83, 0.3);
+    border-radius: 16px;
+}
+
+.modal-header-vitality {
+    background: rgba(0, 200, 83, 0.1);
+    border-bottom: 2px solid var(--vitality-primary);
+    border-radius: 16px 16px 0 0;
+}
+
+.modal-title-vitality {
+    color: var(--vitality-text-white);
+    font-weight: 600;
+}
+
+/* ========================================
+   ALERTAS
+   ======================================== */
+.alert-vitality {
+    border-radius: 12px;
+    border: none;
+    padding: 1rem 1.5rem;
+}
+
+.alert-success-vitality {
+    background: rgba(0, 200, 83, 0.1);
+    border-left: 4px solid var(--vitality-success);
+    color: var(--vitality-success);
+}
+
+.alert-danger-vitality {
+    background: rgba(255, 23, 68, 0.1);
+    border-left: 4px solid var(--vitality-danger);
+    color: var(--vitality-danger);
+}
+
+.alert-warning-vitality {
+    background: rgba(255, 214, 0, 0.1);
+    border-left: 4px solid var(--vitality-warning);
+    color: var(--vitality-warning);
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+.footer-vitality {
+    background: var(--vitality-bg-card);
+    border-top: 2px solid var(--vitality-primary);
+    padding: 1.5rem 0;
+    margin-top: auto;
+}
+
+.footer-vitality p {
+    color: var(--vitality-text-muted);
+    margin-bottom: 0;
+    font-size: 0.9rem;
+}
+
+/* ========================================
+   ANIMACIONES
+   ======================================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+/* ========================================
+   SCROLLBAR PERSONALIZADO
+   ======================================== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--vitality-bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--vitality-primary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--vitality-primary-dark);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 768px) {
+    .navbar-brand-vitality {
+        font-size: 1.2rem;
+    }
+
+    .navbar-brand-vitality .logo-icon {
+        width: 35px;
+        height: 35px;
+    }
+
+    .stat-value {
+        font-size: 1.8rem;
+    }
+
+    .acceso-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .acceso-status {
+        width: 100px;
+        height: 100px;
+        font-size: 3rem;
+    }
+}

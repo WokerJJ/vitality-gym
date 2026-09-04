@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Gimnasio Vitality</title>
+
+    <!-- Bootstrap CSS Local -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-icons.css">
+
+    <!-- Tema Personalizado -->
+    <link rel="stylesheet" href="/css/vitality-theme.css">
+
+    <style>
+        .chart-placeholder {
+            height: 250px;
+            background: rgba(0, 200, 83, 0.05);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed rgba(0, 200, 83, 0.3);
+        }
+
+        .member-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--vitality-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .activity-item {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .quick-action {
+            background: rgba(0, 200, 83, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid rgba(0, 200, 83, 0.2);
+        }
+
+        .quick-action:hover {
+            background: rgba(0, 200, 83, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .quick-action i {
+            font-size: 2rem;
+            color: var(--vitality-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .quick-action span {
+            display: block;
+            color: var(--vitality-text-light);
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- Navegación -->
+    <nav class="navbar navbar-expand-lg navbar-vitality">
+        <div class="container">
+            <a class="navbar-brand navbar-brand-vitality" href="/">
+                <div class="logo-icon">
+                    <i class="bi bi-activity"></i>
+                </div>
+                <span>VITALITY</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-vitality active" href="/">
+                            <i class="bi bi-speedometer2"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-vitality" href="/miembros">
+                            <i class="bi bi-people"></i>Miembros
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-vitality" href="/membresias">
+                            <i class="bi bi-ticket-perforated"></i>Membresías
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-vitality" href="/accesos">
+                            <i class="bi bi-door-open"></i>Accesos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-vitality" href="/reportes">
+                            <i class="bi bi-graph-up"></i>Reportes
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main class="flex-grow-1 py-4">
+        <div class="container">
+
+            <!-- Header -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h2 class="text-white mb-1">
+                        <i class="bi bi-speedometer2 text-success me-2"></i>
+                        Dashboard
+                    </h2>
+                    <p class="text-muted mb-0" id="fecha-actual"></p>
+                </div>
+            </div>
+
+            <!-- Estadísticas Principales -->
+            <div class="row g-4 mb-4" id="stats-container">
+                <!-- Se cargan dinámicamente -->
+                <div class="col-xl-3 col-md-6">
+                    <div class="stat-card primary animate-fade-in-up">
+                        <div class="stat-icon">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+                        <div class="stat-value" id="stat-miembros">-</div>
+                        <div class="stat-label">Miembros Activos</div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="stat-card success animate-fade-in-up" style="animation-delay: 0.1s">
+                        <div class="stat-icon">
+                            <i class="bi bi-ticket-perforated-fill"></i>
+                        </div>
+                        <div class="stat-value" id="stat-membresias">-</div>
+                        <div class="stat-label">Membresías Activas</div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="stat-card warning animate-fade-in-up" style="animation-delay: 0.2s">
+                        <div class="stat-icon">
+                            <i class="bi bi-exclamation-triangle-fill"></i>
+                        </div>
+                        <div class="stat-value" id="stat-por-vencer">-</div>
+                        <div class="stat-label">Por Vencer (7 días)</div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="stat-card info animate-fade-in-up" style="animation-delay: 0.3s">
+                        <div class="stat-icon">
+                            <i class="bi bi-door-open-fill"></i>
+                        </div>
+                        <div class="stat-value" id="stat-accesos-hoy">-</div>
+                        <div class="stat-label">Accesos Hoy</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Acciones Rápidas -->
+            <div class="row g-3 mb-4" id="quick-actions">
+                <div class="col-6 col-md-3">
+                    <div class="quick-action" data-href="/accesos">
+                        <i class="bi bi-qr-code-scan"></i>
+                        <span>Validar Acceso</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="quick-action" data-href="/miembros">
+                        <i class="bi bi-person-plus"></i>
+                        <span>Nuevo Miembro</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="quick-action" data-href="/membresias">
+                        <i class="bi bi-plus-circle"></i>
+                        <span>Nueva Membresía</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="quick-action" data-href="/reportes">
+                        <i class="bi bi-file-earmark-text"></i>
+                        <span>Ver Reportes</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráficos y Tablas -->
+            <div class="row g-4">
+                <!-- Gráfico de Ingresos -->
+                <div class="col-lg-8">
+                    <div class="card card-vitality h-100">
+                        <div class="card-header card-header-vitality">
+                            <i class="bi bi-graph-up"></i>
+                            Ingresos Últimos 7 Días
+                        </div>
+                        <div class="card-body">
+                            <div id="chart-ingresos" class="chart-placeholder">
+                                <div class="text-center">
+                                    <i class="bi bi-bar-chart-line fs-1 text-success mb-2"></i>
+                                    <p class="text-muted">Gráfico de ingresos</p>
+                                    <div id="ingresos-data"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Membresías por Tipo -->
+                <div class="col-lg-4">
+                    <div class="card card-vitality h-100">
+                        <div class="card-header card-header-vitality">
+                            <i class="bi bi-pie-chart"></i>
+                            Membresías por Tipo
+                        </div>
+                        <div class="card-body">
+                            <div id="chart-membresias" class="chart-placeholder">
+                                <div class="text-center">
+                                    <i class="bi bi-pie-chart-fill fs-1 text-success mb-2"></i>
+                                    <p class="text-muted">Distribución</p>
+                                    <div id="membresias-tipo-data"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Últimos Accesos y Por Vencer -->
+            <div class="row g-4 mt-2">
+                <!-- Últimos Accesos -->
+                <div class="col-lg-6">
+                    <div class="card card-vitality">
+                        <div class="card-header card-header-vitality d-flex justify-content-between align-items-center">
+                            <span><i class="bi bi-clock-history"></i> Últimos Accesos</span>
+                            <a href="/accesos" class="btn btn-sm btn-vitality-outline">Ver todos</a>
+                        </div>
+                        <div class="card-body p-0">
+                            <div id="ultimos-accesos">
+                                <div class="text-center py-4">
+                                    <div class="spinner-border text-success" role="status">
+                                        <span class="visually-hidden">Cargando...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Membresías por Vencer -->
+                <div class="col-lg-6">
+                    <div class="card card-vitality">
+                        <div class="card-header card-header-vitality d-flex justify-content-between align-items-center">
+                            <span><i class="bi bi-calendar-x"></i> Por Vencer (7 días)</span>
+                            <a href="/membresias" class="btn btn-sm btn-vitality-outline">Ver todas</a>
+                        </div>
+                        <div class="card-body p-0">
+                            <div id="por-vencer-lista">
+                                <div class="text-center py-4">
+                                    <div class="spinner-border text-success" role="status">
+                                        <span class="visually-hidden">Cargando...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-vitality">
+        <div class="container text-center">
+            <p>
+                <i class="bi bi-heart-pulse text-success me-2"></i>
+                Gimnasio Vitality - Desarrollado por Daniela Blandón &amp; Jhon Hucker Chalarca
+                <br>
+                <small class="text-muted">Sistema de Control de Membresías © 2024</small>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Scripts -->
+    <script>
+        // Configuración
+        const API_URL = '/api';
+
+        // Función fetch con manejo de errores 429
+        async function fetchConManejo(url, options = {}) {
+            try {
+                const response = await fetch(url, options);
+
+                if (response.status === 429) {
+                    console.warn('Rate limit alcanzado. Esperando...');
+                    alert('Demasiadas peticiones. Por favor espere un momento.');
+                    return null;
+                }
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                return await response.json();
+            } catch (error) {
+                console.error('Error en fetch:', error);
+                throw error;
+            }
+        }
+
+        // Mostrar fecha actual
+        function mostrarFecha() {
+            const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('fecha-actual').textContent = new Date().toLocaleDateString('es-ES', opciones);
+        }
+
+        // Cargar resumen del dashboard
+        async function cargarDashboard() {
+            try {
+                const result = await fetchConManejo(`${API_URL}/dashboard/resumen`);
+
+                if (result && result.success) {
+                    const data = result.data;
+
+                    // Actualizar estadísticas
+                    document.getElementById('stat-miembros').textContent = data.resumen.total_miembros_activos || 0;
+                    document.getElementById('stat-membresias').textContent = data.resumen.membresias_activas || 0;
+                    document.getElementById('stat-por-vencer').textContent = data.resumen.membresias_por_vencer || 0;
+                    document.getElementById('stat-accesos-hoy').textContent = data.resumen.accesos_hoy || 0;
+
+                    // Renderizar gráficos simples
+                    renderizarIngresos(data.graficos.ingresos_ultima_semana);
+                    renderizarMembresiasTipo(data.graficos.membresias_por_tipo);
+
+                    // Renderizar listas
+                    renderizarUltimosAccesos(data.accesos_recientes);
+                    renderizarPorVencer(data.membresias_por_vencer);
+                }
+            } catch (error) {
+                console.error('Error cargando dashboard:', error);
+            }
+        }
+
+        // Renderizar ingresos
+        function renderizarIngresos(data) {
+            const container = document.getElementById('ingresos-data');
+            if (!data || data.length === 0) {
+                container.innerHTML = '<p class="text-muted">No hay datos de ingresos</p>';
+                return;
+            }
+
+            let html = '<div class="row mt-3">';
+            data.forEach(item => {
+                html += `
+                    <div class="col-12 mb-2">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-light">${formatearFecha(item.fecha)}</span>
+                            <span class="text-success fw-bold">$${formatearMoneda(item.total)}</span>
+                        </div>
+                        <div class="progress" style="height: 8px; background: rgba(255,255,255,0.1);">
+                            <div class="progress-bar bg-success" style="width: ${Math.min((item.total / 500000) * 100, 100)}%"></div>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        // Renderizar membresías por tipo
+        function renderizarMembresiasTipo(data) {
+            const container = document.getElementById('membresias-tipo-data');
+            if (!data || data.length === 0) {
+                container.innerHTML = '<p class="text-muted">No hay datos</p>';
+                return;
+            }
+
+            const total = data.reduce((sum, item) => sum + parseInt(item.cantidad), 0);
+
+            let html = '<div class="mt-3">';
+            data.forEach(item => {
+                const porcentaje = (item.cantidad / total * 100).toFixed(1);
+                html += `
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span class="text-light small">${item.tipo}</span>
+                            <span class="text-success small">${item.cantidad} (${porcentaje}%)</span>
+                        </div>
+                        <div class="progress" style="height: 6px; background: rgba(255,255,255,0.1);">
+                            <div class="progress-bar bg-success" style="width: ${porcentaje}%"></div>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        // Renderizar últimos accesos
+        function renderizarUltimosAccesos(accesos) {
+            const container = document.getElementById('ultimos-accesos');
+            if (!accesos || accesos.length === 0) {
+                container.innerHTML = '<p class="text-muted text-center py-4">No hay accesos recientes</p>';
+                return;
+            }
+
+            let html = '';
+            accesos.slice(0, 5).forEach(acceso => {
+                const hora = new Date(acceso.fecha_hora_entrada).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+                const badgeClass = acceso.validado ? 'badge-activo' : 'badge-vencido';
+                const estadoText = acceso.validado ? 'Válido' : 'Inválido';
+
+                html += `
+                    <div class="activity-item px-3">
+                        <div class="d-flex align-items-center">
+                            <div class="member-avatar me-3">
+                                ${acceso.nombre_completo.charAt(0)}
+                            </div>
+                            <div class="flex-grow-1">
+                                <div class="text-white fw-medium">${acceso.nombre_completo}</div>
+                                <small class="text-muted">${acceso.tipo_membresia || 'Sin membresía'} • ${hora}</small>
+                            </div>
+                            <span class="badge badge-vitality ${badgeClass}">${estadoText}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        // Renderizar por vencer
+        function renderizarPorVencer(membresias) {
+            const container = document.getElementById('por-vencer-lista');
+            if (!membresias || membresias.length === 0) {
+                container.innerHTML = '<p class="text-muted text-center py-4">No hay membresías por vencer</p>';
+                return;
+            }
+
+            let html = '';
+            membresias.forEach(m => {
+                const badgeClass = m.dias_restantes <= 3 ? 'badge-vencido' : 'badge-por-vencer';
+
+                html += `
+                    <div class="activity-item px-3">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <div class="text-white fw-medium">${m.nombres} ${m.apellidos}</div>
+                                <small class="text-muted">${m.tipo_membresia}</small>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge badge-vitality ${badgeClass}">${m.dias_restantes} días</span>
+                                <div class="text-muted small">${formatearFecha(m.fecha_fin)}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        // Utilidades
+        function formatearMoneda(valor) {
+            return new Intl.NumberFormat('es-CO').format(valor || 0);
+        }
+
+        function formatearFecha(fecha) {
+            if (!fecha) return '-';
+            return new Date(fecha).toLocaleDateString('es-ES', { day: '2-digit', month: 'short' });
+        }
+
+        // Inicializar eventos de quick actions
+        function initQuickActions() {
+            document.querySelectorAll('.quick-action').forEach(el => {
+                el.addEventListener('click', () => {
+                    const href = el.getAttribute('data-href');
+                    if (href) location.href = href;
+                });
+            });
+        }
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            mostrarFecha();
+            cargarDashboard();
+            initQuickActions();
+        });
+    </script>
+</body>
+</html>

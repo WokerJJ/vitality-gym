@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes | Gimnasio Vitality</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/vitality-theme.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-vitality">
+        <div class="container">
+            <a class="navbar-brand navbar-brand-vitality" href="/">
+                <div class="logo-icon"><i class="bi bi-activity"></i></div>
+                <span>VITALITY</span>
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link nav-link-vitality" href="/"><i class="bi bi-speedometer2"></i>Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-vitality" href="/miembros"><i class="bi bi-people"></i>Miembros</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-vitality" href="/membresias"><i class="bi bi-ticket-perforated"></i>Membresías</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-vitality" href="/accesos"><i class="bi bi-door-open"></i>Accesos</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-vitality active" href="/reportes"><i class="bi bi-graph-up"></i>Reportes</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow-1 py-4">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h2 class="text-white mb-1"><i class="bi bi-graph-up text-success me-2"></i>Reportes y Análisis</h2>
+                    <p class="text-muted mb-0">Reportes financieros y estadísticos del gimnasio</p>
+                </div>
+            </div>
+
+            <!-- Filtros -->
+            <div class="card card-vitality mb-4">
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label form-label-vitality">Fecha Inicio</label>
+                            <input type="date" class="form-control form-control-vitality" id="fecha_inicio">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label form-label-vitality">Fecha Fin</label>
+                            <input type="date" class="form-control form-control-vitality" id="fecha_fin">
+                        </div>
+                        <div class="col-md-4 d-flex align-items-end">
+                            <button class="btn btn-vitality btn-vitality-primary w-100" id="btnGenerarReporte">
+                                <i class="bi bi-search me-2"></i>Generar Reporte
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resumen -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-4">
+                    <div class="stat-card success">
+                        <div class="stat-icon"><i class="bi bi-cash-stack"></i></div>
+                        <div class="stat-value" id="total-ingresos">$0</div>
+                        <div class="stat-label">Total Ingresos</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card info">
+                        <div class="stat-icon"><i class="bi bi-receipt"></i></div>
+                        <div class="stat-value" id="total-transacciones">0</div>
+                        <div class="stat-label">Transacciones</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card warning">
+                        <div class="stat-icon"><i class="bi bi-ticket-perforated"></i></div>
+                        <div class="stat-value" id="membresias-vendidas">0</div>
+                        <div class="stat-label">Membresías Vendidas</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabla de Ingresos -->
+            <div class="card card-vitality mb-4">
+                <div class="card-header card-header-vitality">
+                    <i class="bi bi-table"></i> Detalle de Ingresos
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-vitality">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Método de Pago</th>
+                                    <th>Transacciones</th>
+                                    <th class="text-end">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-ingresos">
+                                <tr><td colspan="4" class="text-center py-4 text-muted">Seleccione un rango de fechas</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reportes adicionales -->
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="card card-vitality">
+                        <div class="card-header card-header-vitality">
+                            <i class="bi bi-exclamation-triangle"></i> Membresías por Vencer
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-vitality">
+                                    <thead>
+                                        <tr>
+                                            <th>Miembro</th>
+                                            <th>Vence</th>
+                                            <th>Días</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabla-por-vencer">
+                                        <tr><td colspan="3" class="text-center py-4"><div class="spinner-border text-success"></div></td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card card-vitality">
+                        <div class="card-header card-header-vitality">
+                            <i class="bi bi-trophy"></i> Membresías Más Vendidas
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-vitality">
+                                    <thead>
+                                        <tr>
+                                            <th>Tipo</th>
+                                            <th>Vendidas</th>
+                                            <th>Recaudado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabla-mas-vendidas">
+                                        <tr><td colspan="3" class="text-center py-4"><div class="spinner-border text-success"></div></td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer-vitality">
+        <div class="container text-center">
+            <p><i class="bi bi-heart-pulse text-success me-2"></i>Gimnasio Vitality © 2024</p>
+        </div>
+    </footer>
+
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/reportes.js"></script>
+</body>
+</html>

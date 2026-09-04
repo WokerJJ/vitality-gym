@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Accesos | Gimnasio Vitality</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/vitality-theme.css">
+    <style>
+        .acceso-panel {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .resultado-acceso {
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-vitality">
+        <div class="container">
+            <a class="navbar-brand navbar-brand-vitality" href="/">
+                <div class="logo-icon"><i class="bi bi-activity"></i></div>
+                <span>VITALITY</span>
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link nav-link-vitality" href="/"><i class="bi bi-speedometer2"></i>Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-vitality" href="/miembros"><i class="bi bi-people"></i>Miembros</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-vitality" href="/membresias"><i class="bi bi-ticket-perforated"></i>Membresías</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-vitality active" href="/accesos"><i class="bi bi-door-open"></i>Accesos</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-vitality" href="/reportes"><i class="bi bi-graph-up"></i>Reportes</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow-1 py-4">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-12 text-center">
+                    <h2 class="text-white mb-1"><i class="bi bi-door-open text-success me-2"></i>Control de Accesos</h2>
+                    <p class="text-muted mb-0">Validación de membresías al ingreso</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="card card-vitality acceso-panel">
+                        <div class="card-header card-header-vitality text-center">
+                            <i class="bi bi-qr-code-scan"></i> Validar Entrada
+                        </div>
+                        <div class="card-body">
+                            <form id="formAcceso">
+                                <div class="mb-4">
+                                    <label class="form-label form-label-vitality">Número de Identificación</label>
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-text bg-transparent border-end-0">
+                                            <i class="bi bi-person-badge text-success"></i>
+                                        </span>
+                                        <input type="text" class="form-control form-control-vitality" id="identificacion_acceso"
+                                               placeholder="Ingrese identificación" required autofocus autocomplete="off">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-vitality btn-vitality-primary w-100 btn-lg">
+                                    <i class="bi bi-check-circle me-2"></i>Validar Acceso
+                                </button>
+                            </form>
+
+                            <div id="resultado-acceso" class="mt-4" style="display: none;">
+                                <div id="resultado-contenido"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-7">
+                    <div class="card card-vitality">
+                        <div class="card-header card-header-vitality d-flex justify-content-between align-items-center">
+                            <span><i class="bi bi-clock-history"></i> Accesos de Hoy</span>
+                            <span class="badge badge-vitality badge-activo" id="contador-hoy">0</span>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-vitality">
+                                    <thead>
+                                        <tr>
+                                            <th>Hora</th>
+                                            <th>Miembro</th>
+                                            <th>Tipo</th>
+                                            <th>Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabla-accesos-hoy">
+                                        <tr><td colspan="4" class="text-center py-4 text-muted">No hay accesos registrados hoy</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer-vitality">
+        <div class="container text-center">
+            <p><i class="bi bi-heart-pulse text-success me-2"></i>Gimnasio Vitality © 2024</p>
+        </div>
+    </footer>
+
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/accesos.js"></script>
+</body>
+</html>

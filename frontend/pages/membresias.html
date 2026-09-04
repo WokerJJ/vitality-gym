@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membresías | Gimnasio Vitality</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/vitality-theme.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-vitality">
+        <div class="container">
+            <a class="navbar-brand navbar-brand-vitality" href="/">
+                <div class="logo-icon"><i class="bi bi-activity"></i></div>
+                <span>VITALITY</span>
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link nav-link-vitality" href="/"><i class="bi bi-speedometer2"></i>Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-vitality" href="/miembros"><i class="bi bi-people"></i>Miembros</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-vitality active" href="/membresias"><i class="bi bi-ticket-perforated"></i>Membresías</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-vitality" href="/accesos"><i class="bi bi-door-open"></i>Accesos</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-vitality" href="/reportes"><i class="bi bi-graph-up"></i>Reportes</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow-1 py-4">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-md-8">
+                    <h2 class="text-white mb-1"><i class="bi bi-ticket-perforated text-success me-2"></i>Gestión de Membresías</h2>
+                    <p class="text-muted mb-0">Administra membresías y pagos</p>
+                </div>
+                <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                    <button class="btn btn-vitality btn-vitality-primary" data-bs-toggle="modal" data-bs-target="#modalMembresia">
+                        <i class="bi bi-plus-lg me-2"></i>Nueva Membresía
+                    </button>
+                </div>
+            </div>
+
+            <div class="card card-vitality">
+                <div class="card-header card-header-vitality">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <i class="bi bi-list-ul"></i> Lista de Membresías
+                        </div>
+                        <div class="col-md-6">
+                            <select class="form-control form-control-vitality" id="filtroEstado">
+                                <option value="">Todos los estados</option>
+                                <option value="Activa">Activas</option>
+                                <option value="Vencida">Vencidas</option>
+                                <option value="Cancelada">Canceladas</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-vitality">
+                            <thead>
+                                <tr>
+                                    <th>Miembro</th>
+                                    <th>Tipo</th>
+                                    <th>Inicio</th>
+                                    <th>Vencimiento</th>
+                                    <th>Precio</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-membresias">
+                                <tr><td colspan="7" class="text-center py-4"><div class="spinner-border text-success"></div></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal fade" id="modalMembresia" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content modal-content-vitality">
+                <div class="modal-header modal-header-vitality">
+                    <h5 class="modal-title modal-title-vitality"><i class="bi bi-plus-circle me-2"></i>Nueva Membresía</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formMembresia">
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label form-label-vitality">Miembro *</label>
+                                <select class="form-control form-control-vitality" id="id_miembro_select" required>
+                                    <option value="">Seleccione un miembro</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label form-label-vitality">Tipo de Membresía *</label>
+                                <select class="form-control form-control-vitality" id="id_tipo" required>
+                                    <option value="">Seleccione...</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label form-label-vitality">Fecha de Inicio *</label>
+                                <input type="date" class="form-control form-control-vitality" id="fecha_inicio" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label form-label-vitality">Precio Pagado *</label>
+                                <input type="number" class="form-control form-control-vitality" id="precio_pagado" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label form-label-vitality">Método de Pago *</label>
+                                <select class="form-control form-control-vitality" id="metodo_pago" required>
+                                    <option value="Efectivo">Efectivo</option>
+                                    <option value="Tarjeta">Tarjeta</option>
+                                    <option value="Transferencia">Transferencia</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-secondary">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-vitality btn-vitality-primary" id="btnGuardarMembresia">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-vitality">
+        <div class="container text-center">
+            <p><i class="bi bi-heart-pulse text-success me-2"></i>Gimnasio Vitality © 2024</p>
+        </div>
+    </footer>
+
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/membresias.js"></script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miembros | Gimnasio Vitality</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/vitality-theme.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-vitality">
+        <div class="container">
+            <a class="navbar-brand navbar-brand-vitality" href="/">
+                <div class="logo-icon"><i class="bi bi-activity"></i></div>
+                <span>VITALITY</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link nav-link-vitality" href="/"><i class="bi bi-speedometer2"></i>Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-vitality active" href="/miembros"><i class="bi bi-people"></i>Miembros</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-vitality" href="/membresias"><i class="bi bi-ticket-perforated"></i>Membresías</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-vitality" href="/accesos"><i class="bi bi-door-open"></i>Accesos</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-vitality" href="/reportes"><i class="bi bi-graph-up"></i>Reportes</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow-1 py-4">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-md-8">
+                    <h2 class="text-white mb-1"><i class="bi bi-people text-success me-2"></i>Gestión de Miembros</h2>
+                    <p class="text-muted mb-0">Administra los miembros del gimnasio</p>
+                </div>
+                <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                    <button class="btn btn-vitality btn-vitality-primary" data-bs-toggle="modal" data-bs-target="#modalMiembro">
+                        <i class="bi bi-plus-lg me-2"></i>Nuevo Miembro
+                    </button>
+                </div>
+            </div>
+
+            <div class="card card-vitality">
+                <div class="card-header card-header-vitality">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <i class="bi bi-list-ul"></i> Lista de Miembros
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text bg-transparent border-0 text-success"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control form-control-vitality" id="busqueda" placeholder="Buscar por nombre, identificación o email...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-vitality">
+                            <thead>
+                                <tr>
+                                    <th>Miembro</th>
+                                    <th>Identificación</th>
+                                    <th>Contacto</th>
+                                    <th>Estado</th>
+                                    <th>Registro</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-miembros">
+                                <tr><td colspan="6" class="text-center py-4"><div class="spinner-border text-success"></div></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Nuevo/Editar Miembro -->
+    <div class="modal fade" id="modalMiembro" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content modal-content-vitality">
+                <div class="modal-header modal-header-vitality">
+                    <h5 class="modal-title modal-title-vitality" id="modalMiembroTitulo"><i class="bi bi-person-plus me-2"></i>Nuevo Miembro</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formMiembro">
+                        <input type="hidden" id="id_miembro">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label form-label-vitality">Nombres *</label>
+                                <input type="text" class="form-control form-control-vitality" id="nombres" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label form-label-vitality">Apellidos *</label>
+                                <input type="text" class="form-control form-control-vitality" id="apellidos" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label form-label-vitality">Identificación *</label>
+                                <input type="text" class="form-control form-control-vitality" id="identificacion" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label form-label-vitality">Email</label>
+                                <input type="email" class="form-control form-control-vitality" id="email">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label form-label-vitality">Teléfono</label>
+                                <input type="tel" class="form-control form-control-vitality" id="telefono">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label form-label-vitality">Estado</label>
+                                <select class="form-control form-control-vitality" id="estado">
+                                    <option value="Activo">Activo</option>
+                                    <option value="Inactivo">Inactivo</option>
+                                    <option value="Suspendido">Suspendido</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-secondary">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-vitality btn-vitality-primary" id="btnGuardarMiembro">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-vitality">
+        <div class="container text-center">
+            <p><i class="bi bi-heart-pulse text-success me-2"></i>Gimnasio Vitality © 2024</p>
+        </div>
+    </footer>
+
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/miembros.js"></script>
+</body>
+</html>
