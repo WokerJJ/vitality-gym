@@ -21,13 +21,13 @@ Este sistema permite:
 ### Base de Datos (MySQL)
 - **Normalización**: 3FN (Tercera Forma Normal)
 - **Tablas principales**:
-  - `miembros`: Información de clientes
-  - `tipos_membresia`: Catálogo de planes
-  - `membresias`: Registro de membresías activas/vencidas
-  - `accesos`: Control de entrada/salida
-  - `pagos`: Historial de pagos
-  - `usuarios_sistema`: Usuarios administrativos
-  - `auditoria`: Log de cambios
+- `miembros`: Información de clientes
+- `tipos_membresia`: Catálogo de planes
+- `membresias`: Registro de membresías activas/vencidas
+- `accesos`: Control de entrada/salida
+- `pagos`: Historial de pagos
+- `usuarios_sistema`: Usuarios administrativos
+- `auditoria`: Log de cambios
 
 ### Características Avanzadas de MySQL
 - ✅ **Triggers**: Automatización de estados, auditoría, validaciones
@@ -90,15 +90,17 @@ npm install
 
 ### Paso 3: Configurar Variables de Entorno
 
-El archivo `.env` ya está configurado con valores por defecto:
+Crea un archivo `.env` en la raíz del proyecto (no se sube al repositorio) con tus propios valores, por ejemplo:
 
 ```
 DB_HOST=localhost
 DB_USER=vitality_app
-DB_PASSWORD=Vitality2024!
+DB_PASSWORD=<TU_PASSWORD_AQUI>
 DB_NAME=vitality_gym
 PORT=3000
 ```
+
+⚠️ **Nunca subas contraseñas reales al repositorio.** Usa `.env` (agregado a `.gitignore`) y define credenciales distintas para cada entorno (desarrollo, pruebas, producción).
 
 ### Paso 4: Iniciar el Servidor
 
@@ -117,39 +119,39 @@ El sistema estará disponible en: **http://localhost:3000**
 ```
 vitality-gym/
 ├── backend/
-│   ├── config/
-│   │   └── database.js          # Configuración de conexión MySQL
-│   ├── routes/
-│   │   ├── miembros.js          # API de miembros
-│   │   ├── membresias.js        # API de membresías
-│   │   ├── accesos.js           # API de control de acceso
-│   │   ├── reportes.js          # API de reportes
-│   │   └── dashboard.js         # API de dashboard
-│   └── server.js                # Servidor Express
+│ ├── config/
+│ │ └── database.js # Configuración de conexión MySQL
+│ ├── routes/
+│ │ ├── miembros.js # API de miembros
+│ │ ├── membresias.js # API de membresías
+│ │ ├── accesos.js # API de control de acceso
+│ │ ├── reportes.js # API de reportes
+│ │ └── dashboard.js # API de dashboard
+│ └── server.js # Servidor Express
 ├── database/
-│   └── sql/
-│       ├── 01_schema.sql        # Esquema de tablas (3FN)
-│       ├── 02_triggers.sql      # Triggers y procedimientos
-│       ├── 03_vistas.sql        # Vistas
-│       ├── 04_usuarios_permisos.sql  # Usuarios GRANT
-│       └── 05_datos_iniciales.sql    # Datos de prueba
+│ └── sql/
+│ ├── 01_schema.sql # Esquema de tablas (3FN)
+│ ├── 02_triggers.sql # Triggers y procedimientos
+│ ├── 03_vistas.sql # Vistas
+│ ├── 04_usuarios_permisos.sql # Usuarios GRANT
+│ └── 05_datos_iniciales.sql # Datos de prueba
 ├── frontend/
-│   ├── css/
-│   │   └── vitality-theme.css   # Tema personalizado
-│   ├── js/
-│   │   ├── miembros.js
-│   │   ├── membresias.js
-│   │   ├── accesos.js
-│   │   └── reportes.js
-│   ├── pages/
-│   │   ├── miembros.html
-│   │   ├── membresias.html
-│   │   ├── accesos.html
-│   │   └── reportes.html
-│   └── index.html               # Dashboard
-├── bootstrap/                   # Bootstrap 5 offline
-│   ├── css/
-│   └── js/
+│ ├── css/
+│ │ └── vitality-theme.css # Tema personalizado
+│ ├── js/
+│ │ ├── miembros.js
+│ │ ├── membresias.js
+│ │ ├── accesos.js
+│ │ └── reportes.js
+│ ├── pages/
+│ │ ├── miembros.html
+│ │ ├── membresias.html
+│ │ ├── accesos.html
+│ │ └── reportes.html
+│ └── index.html # Dashboard
+├── bootstrap/ # Bootstrap 5 offline
+│ ├── css/
+│ └── js/
 ├── package.json
 ├── .env
 └── README.md
@@ -157,13 +159,17 @@ vitality-gym/
 
 ## 🔐 Usuarios de Base de Datos
 
-| Usuario | Contraseña | Permisos |
-|---------|-----------|----------|
-| vitality_admin | AdminVitality2024!@# | Todos (con GRANT) |
-| vitality_app | Vitality2024! | CRUD completo (aplicación) |
-| vitality_recepcion | RecepVitality2024! | Recepción (SELECT, INSERT) |
-| vitality_lector | LectorVitality2024! | Solo lectura de accesos |
-| vitality_reportes | ReportesVitality2024! | Solo SELECT para reportes |
+Este proyecto define 5 niveles de usuarios de MySQL con distintos permisos. Las contraseñas reales se configuran localmente al ejecutar `npm run db:permissions` (ver `database/sql/04_usuarios_permisos.sql`) y **no se publican aquí**.
+
+| Usuario | Permisos |
+|---------|----------|
+| vitality_admin | Todos (con GRANT) |
+| vitality_app | CRUD completo (aplicación) |
+| vitality_recepcion | Recepción (SELECT, INSERT) |
+| vitality_lector | Solo lectura de accesos |
+| vitality_reportes | Solo SELECT para reportes |
+
+⚠️ Si estas credenciales llegaron a usarse en algún entorno real o compartido, se recomienda rotarlas.
 
 ## 📊 Reportes Disponibles
 
@@ -184,15 +190,15 @@ vitality-gym/
 ## 🔧 Comandos NPM Disponibles
 
 ```bash
-npm start              # Iniciar servidor
-npm run dev            # Modo desarrollo con nodemon
-npm run db:create      # Crear esquema de base de datos
-npm run db:triggers    # Crear triggers y procedimientos
-npm run db:views       # Crear vistas
+npm start # Iniciar servidor
+npm run dev # Modo desarrollo con nodemon
+npm run db:create # Crear esquema de base de datos
+npm run db:triggers # Crear triggers y procedimientos
+npm run db:views # Crear vistas
 npm run db:permissions # Crear usuarios y permisos
-npm run db:seed        # Cargar datos de prueba
-npm run db:setup       # Ejecutar todo el setup
-npm run db:reset       # Resetear y recrear todo
+npm run db:seed # Cargar datos de prueba
+npm run db:setup # Ejecutar todo el setup
+npm run db:reset # Resetear y recrear todo
 ```
 
 ## 📱 Características de la Interfaz
@@ -210,6 +216,7 @@ npm run db:reset       # Resetear y recrear todo
 - Validación de datos con express-validator
 - Sanitización de inputs
 - Control de acceso por roles (GRANT)
+- Credenciales gestionadas vía variables de entorno (`.env`, no versionado)
 
 ## 📝 Notas para Desarrollo
 
